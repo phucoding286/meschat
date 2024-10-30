@@ -412,9 +412,9 @@ class MesChat(Sender):
 
 
 meschat = MesChat(
-    email_or_phone="abc@s.com",
-    password="",
-    group_or_chat=""
+    email_or_phone="demo@s.com",
+    password="demo",
+    group_or_chat="" # link group or chat box
 )
 
 while True:
