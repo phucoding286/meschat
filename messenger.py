@@ -412,9 +412,9 @@ class MesChat(Sender):
 
 
 meschat = MesChat(
-    email_or_phone="smskherson@futuresoulrecords.com",
-    password="abcabc123",
-    group_or_chat="https://www.messenger.com/e2ee/t/8370380109722638"
+    email_or_phone="abc@s.com",
+    password="",
+    group_or_chat=""
 )
 
 while True:
