@@ -411,22 +411,23 @@ class MesChat(Sender):
 
 
 
-meschat = MesChat(
-    email_or_phone="demo@s.com",
-    password="demo",
-    group_or_chat="" # link group or chat box
-)
+if __name__ == "__main__":
+    meschat = MesChat(
+        email_or_phone="demo@s.com",
+        password="demo",
+        group_or_chat="" # link group or chat box
+    )
 
-while True:
-    new_message = meschat.new_message_listen()
-    if new_message is not None:
-        if new_message in ["hi", "Hi"]:
-            meschat.send_message("hello, how are you?")
-        elif new_message in ['send image', 'send img']:
-            meschat.send_image("./test.jpg")
-        else:
-            meschat.send_message("what do you mean?")
-        continue
-    new_image = meschat.new_image_listen(return_file=True)
-    if new_message is not None:
-        pass
+    while True:
+        new_message = meschat.new_message_listen()
+        if new_message is not None:
+            if new_message in ["hi", "Hi"]:
+                meschat.send_message("hello, how are you?")
+            elif new_message in ['send image', 'send img']:
+                meschat.send_image("./test.jpg")
+            else:
+                meschat.send_message("what do you mean?")
+            continue
+        new_image = meschat.new_image_listen(return_file=True)
+        if new_message is not None:
+            pass
