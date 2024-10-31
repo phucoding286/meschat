@@ -14,6 +14,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.edge.service import Service
 from PIL import Image
 import io
+import shutil
 import colorama
 colorama.init()
 
@@ -39,14 +40,6 @@ def waiting_ui(timeout=5, content=""):
     print()
 
 
-try:
-    edge_chromium_path = EdgeChromiumDriverManager().install()
-    print(system_color("your edge driver path"))
-    print(success_color(f"-> {edge_chromium_path}"))
-except:
-    input(error_color("đã có lỗi khi cài edge drive vui lòng kiểm tra lại, enter để đóng\n-> "))
-
-
 print(system_color(" -----------------------------"))
 print(system_color("| MODULES CREATED BY PHUTECH  |"))
 print(system_color("| facebook -> Programing sama |"))
@@ -57,17 +50,23 @@ print(system_color(" -----------------------------"))
 
 
 class LoginCreateSession:
-    def __init__(self, email_or_phone, password, group_or_chat):
-        options = webdriver.ChromeOptions()
+    def __init__(self, email_or_phone, password, group_or_chat, chromium_temp_data_dir=None):
+        options = webdriver.EdgeOptions()
+        service = webdriver.EdgeService("./chromium/msedgedriver.exe")
         
+        if chromium_temp_data_dir != None:
+            if os.path.exists(chromium_temp_data_dir):
+                shutil.rmtree(chromium_temp_data_dir)
+            options.add_argument(f"user-data-dir={chromium_temp_data_dir}")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--remote-debugging-port=9222")
         options.add_argument("--log-level=3")
         options.add_argument("--headless=old")
-
-        self.browser = webdriver.Chrome(
+        
+        self.browser = webdriver.Edge(
             options=options,
+            service=service,
             keep_alive=True
         )
 
@@ -172,8 +171,8 @@ class LoginCreateSession:
 
 
 class Listener(LoginCreateSession):
-    def __init__(self, email_or_phone, password, group_or_chat):
-        super().__init__(email_or_phone, password, group_or_chat)
+    def __init__(self, email_or_phone, password, group_or_chat, chromium_temp_data_dir=None):
+        super().__init__(email_or_phone, password, group_or_chat, chromium_temp_data_dir)
 
         self.his_inp = ""
         self.current_inp = ""
@@ -309,8 +308,8 @@ class Listener(LoginCreateSession):
 
 
 class Sender(Listener):
-    def __init__(self, email_or_phone, password, group_or_chat):
-        super().__init__(email_or_phone, password, group_or_chat)
+    def __init__(self, email_or_phone, password, group_or_chat, chromium_temp_data_dir=None):
+        super().__init__(email_or_phone, password, group_or_chat, chromium_temp_data_dir)
 
     def send_message(self, inp=None, inp_down_line=None):
         try:
@@ -386,8 +385,8 @@ class Sender(Listener):
 
 
 class MesChat(Sender):
-    def __init__(self, email_or_phone, password, group_or_chat):
-        super().__init__(email_or_phone, password, group_or_chat)
+    def __init__(self, email_or_phone, password, group_or_chat, chromium_temp_data_dir=None):
+        super().__init__(email_or_phone, password, group_or_chat, chromium_temp_data_dir)
     
     def new_message_listen(self):
         if self.his_inp != self.current_inp:
